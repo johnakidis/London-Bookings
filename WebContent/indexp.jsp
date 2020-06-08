@@ -17,6 +17,25 @@
 	box-sizing: border-box;
 }
 
+.b6{
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+	margin-left:15px;
+	padding: 10px 20px;
+	background-color: rgba(100,149,237,1);
+	border: none;
+	border-radius: 50px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
+
+.b6:hover{
+	background-color: rgba(65,105,225,0.8);
+}
+
 input{
 	box-sizing:border-box;
 	padding:12px 3px;
@@ -67,6 +86,7 @@ body{
  }
  h2{
  font: bold 18px;
+ margin-left:40%;
  }
  .checked {
   color: orange;
@@ -233,7 +253,11 @@ a.button:hover{
   border-radius: 25px;
 }
 
+.child:hover{
+	filter: brightness(90%);
+}
 .cht{
+padding-right:10px;
 	padding-left:15px;
 	margin-bottom:10px;
 }
@@ -280,13 +304,7 @@ a.button:hover{
 <% } %>
 </ul>
 </nav>
-<% if(session.getAttribute("intro")!=null){
-	session.removeAttribute("intro");
-}else{
-	response.sendRedirect("index.jsp");
-}
 
-%>
 <% if(session.getAttribute("error")!=null){ %>
 <% if(session.getAttribute("error").equals("uname")){ %>
 <script type="text/javascript"> alert("This username doesn't exist. Please try again!");</script>            
@@ -315,6 +333,7 @@ a.button:hover{
 </div>
 <% } %>
 </header>
+<button onclick="topFunction()" id="myBtn" class="b6" title="Go to top">Top</button>
 <div class="data">
 <br/><br/>
 <% 
@@ -331,21 +350,18 @@ ArrayList<String> checkoutlist=(ArrayList<String>) session.getAttribute("checkou
 ArrayList<String> petslist=(ArrayList<String>) session.getAttribute("pets");
 ArrayList<String> roomslist=(ArrayList<String>) session.getAttribute("rooms");
 ArrayList<String> starslist=(ArrayList<String>) session.getAttribute("stars");
-ArrayList<String> serveslist=(ArrayList<String>) session.getAttribute("serves");
-ArrayList<String> ophlist=(ArrayList<String>) session.getAttribute("oph");
 double lt=0.0;
 double ln=0.0;
 String temp="";
 //hotels 
 %> 
-<h2>HOTELS  
+<h2>HOTELS <img border="0"  src="img/hotel.png" width="20" height="20">
 <a class="b1" href="hotel.jsp">See All</a> </h2><br/>
 <div class="parent">
 <br/><%
 String start="https://www.openstreetmap.org/?mlat=";
 String mid="&mlon=";
 String end="&zoom=15";
-
 for(int k=0;k<6;k++){
 	%> <div class="child"> <div class="cht"><% 
 		
@@ -353,52 +369,60 @@ for(int k=0;k<6;k++){
 	String idd="Map"+tos;
 	String ur="";
 	String all="";
+	try{
 	all=start+latlist.get(k)+mid+lonlist.get(k)+end;
 	lt=Double.parseDouble(latlist.get(k));
 	ln=Double.parseDouble(lonlist.get(k));
+	}
+	catch(NullPointerException ex){
+		%> <jsp:forward page="/index.jsp" /><% 
+	}
  %>
 <h3> <%=namelist.get(k)%> </h3><br/>
   
 <% if(!all.equals("")){ %>
 <a class="ur"target="_blank" href=<%=all%> >Map</a><br/>
 <% }if(!urlist.get(k).matches("(.*)</TD>(.*)")){ %>
-URL : <a class="ur" target="_blank" href=<%=urlist.get(k)%> ><%=urlist.get(k)%></a><br/>
+<img border="0"  src="img/website.png" width="20" height="20"> <a class="ur" target="_blank" href=<%=urlist.get(k)%> >Website</a><br/>
 <% } else{ %>
-URL : Data not available <br/>
+<img border="0"  src="img/website.png" width="20" height="20">  <br/>
 <% }if(!emaillist.get(k).matches("(.*)</TD>(.*)")){ %>
-Email : <%=emaillist.get(k)%> <br/>
+<img border="0"  src="img/mail.png" width="20" height="20">  <%=emaillist.get(k)%> <br/>
 <% } else{ %>
-Email : Data not available <br/>
+<img border="0"  src="img/mail.png" width="20" height="20">  <br/>
 <% }if(!phonelist.get(k).matches("(.*)</TD>(.*)")){ %>
-Phone : <%=phonelist.get(k)%> <br/>
+<img border="0"  src="img/phone.png" width="20" height="20"> <%=phonelist.get(k)%> <br/>
 <% } else{ %>
-Phone : Data not available <br/>
+<img border="0"  src="img/phone.png" width="20" height="20">   <br/>
 <% }if(!addresslist.get(k).matches("(.*)</TD>(.*)")){ %>
-Address : <%=addresslist.get(k)%> <br/>
+<img border="0"  src="img/location000000.png" width="20" height="20">  <%=addresslist.get(k)%> <br/>
 <% } else{ %>
-Address : Data not available <br/>
+<img border="0"  src="img/location000000.png" width="20" height="20">  <br/>
+<% }if(!petslist.get(k).matches("(.*)</TD>(.*)")){ %>
+<img border="0"  src="img/pets.png" width="20" height="20"> Allowed ? <%=petslist.get(k)%> <br/>
+<% } else{ %>
+<img border="0"  src="img/pets.png" width="20" height="20"> Allowed ?  <br/>
+<% }if(!checkinlist.get(k).matches("(.*)</TD>(.*)")){ %>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-in : <%=checkinlist.get(k)%> <br/>
+<% } else{ %>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-in :  <br/>
+<% }if(!checkoutlist.get(k).matches("(.*)</TD>(.*)")){ %>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-out : <%=checkoutlist.get(k)%> <br/>
+<% } else{ %>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-out :  <br/>
 <% }if(!descriptionlist.get(k).matches("(.*)</TD>(.*)")){ %>
 Description : <%=descriptionlist.get(k)%> <br/>
 <% } else{ %>
-Description : Data not available <br/>
-<% }if(!petslist.get(k).matches("(.*)</TD>(.*)")){ %>
-Are pets allowed ? <%=petslist.get(k)%> <br/>
-<% } else{ %>
-Are pets allowed? Data not available <br/>
-<% }if(!checkinlist.get(k).matches("(.*)</TD>(.*)")){ %>
-Check-in hour : <%=checkinlist.get(k)%> <br/>
-<% } else{ %>
-Check-in hour : Data not available <br/>
-<% }if(!checkoutlist.get(k).matches("(.*)</TD>(.*)")){ %>
-Check-out hour : <%=checkoutlist.get(k)%> <br/>
-<% } else{ %>
-Check-out hour : Data not available <br/>
+Description :  <br/>
 <% }if(!roomslist.get(k).matches("(.*)</TD>(.*)")){ %>
 Number of rooms : <%=roomslist.get(k)%> <br/>
 <% } else{ %>
-Number of rooms : Data not available <br/>
+Number of rooms :  <br/>
 <% }if(!starslist.get(k).matches("(.*)</TD>(.*)")){ %>
-<% int starval=Integer.parseInt(starslist.get(k)); 
+<% 
+double ratingg=Double.parseDouble(starslist.get(k));
+int rating=(int)ratingg;
+int starval=rating; 
 for(int sv=1;sv<=starval;sv++){ %>
 <span class="fa fa-star checked"></span>
 <% } 
@@ -432,7 +456,7 @@ for(int sv=starval+1;sv<=5;sv++){ %>
 <button class="b3" type="submit" value="Submit">Book</button><br/><br/>
 </form>
 <% }  %>
-<button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button> <br/><br/>
+<button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map </button> <br/><br/>
 <div id=<%=idd%> style="height:100px;width:375px"></div>
 </div> </div>
 <% 
@@ -468,6 +492,21 @@ function mymap(lt,ln,i) {
     map.addLayer(markers);
     markers.addMarker(new OpenLayers.Marker(position));
     map.setCenter(position, zoom);
+}
+</script>
+<script>
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 }
 </script>
 </html>

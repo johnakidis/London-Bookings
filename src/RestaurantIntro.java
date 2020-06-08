@@ -39,7 +39,7 @@ public class RestaurantIntro extends HttpServlet {
     			" OPTIONAL { ?x schema:address ?address } . \r\n" + 
     			" OPTIONAL { ?x schema:description ?description } . \r\n" + 
     			" OPTIONAL { ?x schema:openingHours ?openingHours }\r\n" + 
-    			"} GROUP BY ?name\r\n";
+    			"} GROUP BY ?name\r\n LIMIT 30 \r\n";
     	URL url=new URL("http://localhost:8090/strabon-endpoint-3.3.2-SNAPSHOT/Query?query="+URLEncoder.encode(qr,StandardCharsets.UTF_8.toString()));
     	URLConnection con=url.openConnection();
     	con.setConnectTimeout(5000);

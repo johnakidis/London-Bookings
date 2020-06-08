@@ -12,11 +12,29 @@
 <title>My Bookings</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 * {
 	box-sizing: border-box;
 }
+.b6{
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+	margin-left:15px;
+	padding: 10px 20px;
+	background-color: rgba(100,149,237,1);
+	border: none;
+	border-radius: 50px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
 
+.b6:hover{
+	background-color: rgba(65,105,225,0.8);
+}
  .signupf{
  background-color: #24252A;
  max-width:400px;
@@ -62,7 +80,9 @@ input{
  font-weight: 500;
  font-size: 12px;
 }
-
+.child:hover{
+	filter: brightness(90%);
+}
 footer{
 	font-family:"Montserrat",sans-serirf;
 	font-weight: 500;
@@ -97,6 +117,7 @@ body{
  }
  h2{
  font: bold 18px;
+ margin-left:40%;
  }
  .checked {
   color: orange;
@@ -265,6 +286,7 @@ a.button:hover{
 
 .cht{
 	padding-left:15px;
+	padding-right:10px;
 	margin-bottom:10px;
 }
 
@@ -343,6 +365,7 @@ a.button:hover{
 </div>
 <% } %>
 </header>
+<button onclick="topFunction()" id="myBtn" class="b6" title="Go to top">Top</button>
 <div class="data">
 <h2>Past bookings</h2>
 <% java.sql.Connection conn=DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","admin");
@@ -374,7 +397,8 @@ a.button:hover{
    		Date edf=sdf.parse(enddate);
    		lt=Double.valueOf(rs.getString("lat"));
    		ln=Double.valueOf(rs.getString("lon"));
-   		int rating=Integer.parseInt(rs.getString("rating"));
+   		double ratingg=Double.parseDouble(rs.getString("rating"));
+   		int rating=(int)ratingg;
    		int idf=Integer.parseInt(rs.getString("id"));
    		all=start+lt+mid+ln+end;
    		if(!dt.after(edf))
@@ -388,9 +412,9 @@ a.button:hover{
    <div class="bookings" id="old">
     <h3> <%=rs.getString("name")%> </h3><br/>
     <a class="ur"target="_blank" href=<%=all%> >Map</a><br/>
-   People : <%=rs.getString("people")%> <br/>
-   Starting date : <%=rs.getString("sdate")%> <br/>
-   Ending date : <%=rs.getString("edate")%> <br/>
+   <img border="0"  src="img/people.png" width="20" height="20"> <%=rs.getString("people")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Starting : <%=rs.getString("sdate")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Ending : <%=rs.getString("edate")%> <br/>
    <% if(rating>0) {%>
    <% int starval=rating; 
 for(int sv=1;sv<=starval;sv++){ %>
@@ -404,15 +428,8 @@ for(int sv=starval+1;sv<=5;sv++){ %>
    
    <form action="UpdateRating" method="post">
     <input type="hidden" id="id" name="id" value=<%=idf%> required>
-	<input type="range" id="vol" name="rate" min="1" max="5" list="tick" required> 
-	<datalist id="tick">
-	<option value="1" label="1"></option>
-	<option value="2" label="2"></option>
-	<option value="3" label="3"></option>
-	<option value="4" label="4"></option>
-	<option value="5" label="5"></option>
-	</datalist>
-	<br/><button class="b3" type="submit" value="Submit">Rate</button>
+	Star rating(1-5): <input type="number" name="rate" min="1" max="5" required> 
+<button class="b3" type="submit" value="Submit">Rate</button>
    </form>
    <% } %>
   <br/><button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button> 
@@ -458,11 +475,11 @@ for(int sv=starval+1;sv<=5;sv++){ %>
    <div class="bookings" id="cur">
    <h3> <%=rs2.getString("name")%> </h3><br/>
    <a class="ur"target="_blank" href=<%=all%> >Map</a><br/>
-   People : <%=rs2.getString("people")%> <br/>
-   Starting date : <%=rs2.getString("sdate")%> <br/>
-   Ending date : <%=rs2.getString("edate")%> <br/> <br/> 
-   <button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button>
-<div id=<%=idd%> style="height:100px;width:375px"></div>
+   <img border="0"  src="img/people.png" width="20" height="20"> <%=rs2.getString("people")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Starting : <%=rs2.getString("sdate")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Ending : <%=rs2.getString("edate")%> <br/>
+   <br/><button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button>
+<div id=<%=idd%> style="height:100px;width:375px"></div> 
    </div>
    </div>
    </div>
@@ -505,11 +522,10 @@ for(int sv=starval+1;sv<=5;sv++){ %>
    <div class="bookings" id="fut">
    <h3> <%=rs3.getString("name")%> </h3><br/>
    <a class="ur"target="_blank" href=<%=all%> >Map</a><br/>
-   People : <%=rs3.getString("people")%> <br/>
-   Starting date : <%=rs3.getString("sdate")%> <br/>
-   Ending date : <%=rs3.getString("edate")%> <br/>
-   <br/>
-   <button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button> 
+   <img border="0"  src="img/people.png" width="20" height="20"> <%=rs3.getString("people")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Starting : <%=rs3.getString("sdate")%> <br/>
+   <img border="0"  src="img/dte.png" width="20" height="20"> Ending : <%=rs3.getString("edate")%> <br/>
+   <br/><button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button> 
 <div id=<%=idd%> style="height:100px;width:375px"></div>
    <form action="CancelBooking" method="post">
     <input type="hidden" id="id" name="id" value=<%=idf%> required><br/>
@@ -546,5 +562,20 @@ function mymap(lt,ln,i) {
     map.setCenter(position, zoom);
 }
 
+</script>
+<script>
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 </html>

@@ -15,6 +15,24 @@
 * {
 	box-sizing: border-box;
 }
+.b6{
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+	margin-left:15px;
+	padding: 10px 20px;
+	background-color: rgba(100,149,237,1);
+	border: none;
+	border-radius: 50px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
+
+.b6:hover{
+	background-color: rgba(65,105,225,0.8);
+}
 footer{
 	font-family:"Montserrat",sans-serirf;
 	font-weight: 500;
@@ -303,6 +321,7 @@ a.button:hover{
 </ul>
 </nav>
 <% if(session.getAttribute("error")!=null){ %>
+<script type="text/javascript"> alert("This username is taken. Please try again!");</script> 
 <% if(session.getAttribute("error").equals("uname")){ %>
 <script type="text/javascript"> alert("This username doesn't exist. Please try again!");</script>            
  <%      } else if (session.getAttribute("error").equals("pwd")) { %>
@@ -330,10 +349,10 @@ a.button:hover{
 </div>
 <% } %>
 </header>
-
+<button onclick="topFunction()" id="myBtn" class="b6" title="Go to top">Top</button>
 <div class="data">
 <div class="signupf">
-<h2> Hello <%=(String)session.getAttribute("user") %> <br/> Manage profile data <br/> </h2>
+<h2> Hello <%=(String)session.getAttribute("user") %> <br/> Manage profile data <img border="0"  src="img/acc.png" width="20" height="20"><br/> </h2>
 <%
 java.sql.Connection conn=DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","admin");
 Statement statement=conn.createStatement();
@@ -365,6 +384,21 @@ if(rs.next()){
    	 return true;
   }
 
+</script>
+<script>
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 </body>
 </html>

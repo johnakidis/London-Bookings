@@ -16,6 +16,25 @@
 * {
 	box-sizing: border-box;
 }
+.b6{
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+	margin-left:15px;
+	padding: 10px 20px;
+	background-color: rgba(100,149,237,1);
+	border: none;
+	border-radius: 50px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
+
+.b6:hover{
+	background-color: rgba(65,105,225,0.8);
+}
+
 footer{
 	font-family:"Montserrat",sans-serirf;
 	font-weight: 500;
@@ -248,23 +267,19 @@ a.button:hover{
 }
 
 .parent {
-  display: flex;
-  flex-wrap: wrap;
-  max-width:400px;
-  margin-left:38%;
-  box-sizing:border-box;
-  padding:40px;
+ max-width:400px;
+ border-radius:20px;
+ margin-left:40%;
+ box-sizing:border-box;
+ margin-top:10px;
+ background-color: #D3D3D3;
+ padding-right:10px;
+ padding-left:15px;
+ margin-bottom:10px;
 }
-.child {
-  list-style: none;
-  flex: 0 0 27%;
-  background-color: #D3D3D3;
-  border-radius: 25px;
-}
-.cht{
-	padding-left:15px;
-	margin-right:5px;]
-	margin-bottom:10px;
+
+.parent:hover{
+	filter: brightness(90%);
 }
 
 .h4 {
@@ -340,7 +355,7 @@ a.button:hover{
 </div>
 <% } %>
 </header>
-
+<button onclick="topFunction()" id="myBtn" class="b6" title="Go to top">Top</button>
 <div class="data">
 <div class="parent">
 <div class="child">
@@ -370,33 +385,34 @@ String end="&zoom=15";
 String all="";
 all=start+lt+mid+ln+end;
 %>
-<h3> <%=name%> </h3><br/>
+<br/><h3> <%=name%>  </h3><br/>
 <a class="ur"target="_blank" href=<%=all%> >Map</a><br/>
-Check-in hour : <%=cin%> <br/>
-Check-out hour : <%=cout%> <br/>
-Are pets allowed ? <%=pets%> <br/>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-in : <%=cin%> <br/>
+<img border="0"  src="img/clock.png" width="20" height="20"> Check-out : <%=cout%> <br/>
+<img border="0"  src="img/pets.png" width="20" height="20"> Allowed ? <%=pets%> <br/>
 Number of rooms : <%=rooms%> <br/>
 <% if(url!=null){ %>
-<a href=<%=url%> >Site</a><br/>
+<img border="0"  src="img/website.png" width="20" height="20"> <a class="ur" target="_blank" href=<%=url%> >Website</a><br/>
 <% }if(mail!=null) {%>
-Email : <%=mail%> <br/>
+<img border="0"  src="img/mail.png" width="20" height="20"> <%=mail%> <br/>
 <% }if(phone!=null) {%>
-Phone : <%=phone%> <br/>
+<img border="0"  src="img/phone.png" width="20" height="20"> <%=phone%> <br/>
 <% }if(address!=null) {%>
-Address : <%=address%> <br/>
+<img border="0"  src="img/location000000.png" width="20" height="20"> <%=address%> <br/>
 <% }if(description!=null) { %>
 Description : <%=description%> <br/>
 <% }  %>
 <% 
 if(stars!=null){ %>
-<% int starval=Integer.parseInt(stars); 
+<% double ratingg=Double.parseDouble(stars);
+	int starval=(int)ratingg; 
 for(int sv=1;sv<=starval;sv++){ %>
 <span class="fa fa-star checked"></span>
 <% } 
 for(int sv=starval+1;sv<=5;sv++){ %>
 <span class="fa fa-star"></span>
 <% }} %>
-<div id="Map" style="height:100px;width:375px"></div><br/><br/>
+<br/><br/><div id="Map" style="height:100px;width:375px"></div><br/>
 </div>
 </div>
 </div>
@@ -477,6 +493,21 @@ document.getElementById("edate").setAttribute("min", today);
     map.addLayer(markers);
     markers.addMarker(new OpenLayers.Marker(position));
     map.setCenter(position, zoom);
+</script>
+<script>
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 </body>
 </html>

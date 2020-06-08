@@ -55,7 +55,7 @@ public class RestaurantSearch extends HttpServlet {
        	String cat=request.getParameter("cat");
        	String ct="";
        	if(!cat.equals("Any")) {
-       		ct="FILTER regex(str(?servesCuisine),\".*"+cat+".*\") .";
+       		ct="FILTER regex(str(?servesCuisine),\".*"+cat+".*\",\"i\") .";
        	}
        	else {
        		count++;

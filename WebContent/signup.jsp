@@ -15,6 +15,24 @@
 * {
 	box-sizing: border-box;
 }
+.b6{
+	display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+	margin-left:15px;
+	padding: 10px 20px;
+	background-color: rgba(100,149,237,1);
+	border: none;
+	border-radius: 50px;
+	cursor:pointer;
+	transition: all 0.3s ease 0s;
+}
+
+.b6:hover{
+	background-color: rgba(65,105,225,0.8);
+}
 footer{
 	font-family:"Montserrat",sans-serirf;
 	font-weight: 500;
@@ -303,6 +321,7 @@ a.button:hover{
 </ul>
 </nav>
 <% if(session.getAttribute("error")!=null){ %>
+<script type="text/javascript"> alert("This username is taken. Please try again!");</script>
 <% if(session.getAttribute("error").equals("uname")){ %>
 <script type="text/javascript"> alert("This username doesn't exist. Please try again!");</script>            
  <%      } else if (session.getAttribute("error").equals("pwd")) { %>
@@ -330,16 +349,17 @@ a.button:hover{
 </div>
 <% } %>
 </header>
+<button onclick="topFunction()" id="myBtn" class="b6" title="Go to top">Top</button>
 <div class="data">
 <div class="signupf">
-<h2> Create an account</h2>
+<h2> Create an account <img border="0"  src="img/acc.png" width="20" height="20"></h2>
 <form id="ex" action="SignupServlet" method="post" onsubmit="return sform(this)">
 	<input type="text" placeholder="Username" name="usr" maxlength="20" required/> <br/>
 	<input type="email" placeholder="Email" name="email" maxlength="20" required/> <br/>
-	<input type="password" placeholder="Password" id="pass" name="pwd" maxlength="20" required/> <br/>
-	<input type="password" placeholder="Re-type Password" name="pwd2" id="repass" maxlength="20" required/> <br/>
-	<input type="text" placeholder="First Name" name="nm" maxlength="20" minlength="5" required/> <br/>
-	<input type="text" placeholder="Last Name" name="snm" maxlength="20" minlength="5" required/> <br/>
+	<input type="password" placeholder="Password" id="pass" name="pwd" minlength="5" maxlength="20" required/> <br/>
+	<input type="password" placeholder="Re-type Password" name="pwd2" id="repass"minlength="5"  maxlength="20" required/> <br/>
+	<input type="text" placeholder="First Name" name="nm" maxlength="20"  required/> <br/>
+	<input type="text" placeholder="Last Name" name="snm" maxlength="20"  required/> <br/>
 	<input type="text" placeholder="Phone" name="phone" maxlength="20" required/> <br/> <br/>
 	<button type="submit" value="Submit">Create account</button>
 </form>
@@ -355,6 +375,21 @@ a.button:hover{
 	  }
    	 return true;
   }
+</script>
+<script>
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 </body>
 </html>

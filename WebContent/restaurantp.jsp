@@ -402,7 +402,7 @@ padding-right:10px;
 <div class="signupf">
 <form action="RestaurantSearch" id="ex" method="post" onsubmit="return sform(this)">
 	<input type="search" id="nm" placeholder="Search by name" name="nm"/>
-	Category:<select id="ct" name="cat">
+	Cuisine:<select id="ct" name="cat">
 	<% for(String vl : allcats){ 
 	if(vl.equals("Any")){%>
 	<option value=<%=vl%> selected><%=vl%>
@@ -497,7 +497,7 @@ if(namelist.get(0).matches("(.*)</TD>(.*)")){
 <% }if(!descriptionlist.get(k).matches("(.*)</TD>(.*)")){ %>
 Description : <%=descriptionlist.get(k)%> <br/>
 <% } else { %>
-Description : Data not available <br/> <% } %>
+Description :<br/> <% } %>
 <br/><button class="b3" id="mbt" onclick="mymap(<%=lt%>,<%=ln%>,<%=tos%>);this.disabled = true;">Show Map</button> <br/><br/>
 <div id=<%=idd%> style="height:100px;width:375px"></div>
 <% k++;

@@ -6,7 +6,7 @@ The endpoint was queried through HTTP GET requests with java.
 
 Start page:
 
-![Index](https://github.com/johnakidis/thesisws/blob/master/readmepng/start-page-10-sc.png)
+![Index](https://github.com/johnakidis/thesisws/blob/master/readmepng/start-page-1-sc.png)
 ![Index](https://github.com/johnakidis/thesisws/blob/master/readmepng/start-page-2-sc.png)
 
 If the user is logged in:
